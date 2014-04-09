@@ -6,6 +6,20 @@ Ernest Bellman, pág 76 [96 pdf]
 
 """
 
+# REPORT: Se obtiene la distribución de envíos tal como se marca en la
+# solución del libro, sin embargo no se tiene el score debido a alguna
+# actualización en la construcción de las soluciones pues el score
+# para el depósito 0 no se muestra como el adecuado pero sí calcula el
+# correcto, ver el TODO.
+
+# TODO: Hay algo que no parece funcionar de manera apropiada en la
+# recursión, al igual que con las restricciones, pero pues se debería
+# de checar con más calma en ratos libres.
+
+# A prueba y error se tiene un espacio de soluciones:
+# \prod{\nchoosek{demanda_n + 2 - 1}{demanda_n}} = \prod{demanda_n} =
+# 1568434323456
+
 import numpy  as np
 
 ##########
@@ -43,6 +57,7 @@ demanda = np.array([0, 10, 25, 45, 15, 5, 15, 20, 15, 10, 20])
 f_dict = {}
 schedule = {}
 opt_schedule_cost = {}
+opt_schedule_cost2 = {}
 # opt_schedule_cost = [0 for i in range(10)]
 
 def G1(N, x1):
@@ -91,11 +106,16 @@ def reconstruct_schedule(N, x1):
 
     """
     global opt_schedule_cost
+    message = "Modificando Depósito {0}; A mover: {1}; se requere: {2}".format(
+        N,
+        x1 - schedule[(N, x1)][1],
+        sum(demanda[:N]))
     opt_schedule_cost[N - 1] = (
         'D1 = ', schedule[(N, x1)][1], 'D2 = ',
         schedule[(N, x1)][2], 'costo = ',
         G1(N, schedule[(N, x1)][1]) + G2(N, schedule[(N, x1)][2]))
     # print opt_schedule_cost[N-1]
+
     if N > 1:
         reconstruct_schedule(N-1, x1 - schedule[(N, x1)][1])
     print schedule[(N, x1)][0], '|  ', G1(N, schedule[(N, x1)][1]) + G2(N, schedule[(N, x1)][2])
@@ -131,11 +151,11 @@ def F(N, x1):
             # print "x1", x1
         else:
 
-            # rango_var_xN1 = range(0, demanda[N] + 1)
+            rango_var_xN1 = range(0, demanda[N] + 1)
 
-            # El libro siguiere esto:
-            rango_var_xN1 = range(max(0, x1 - sum(demanda[:N])),
-                                  min(x1, demanda[N]) + 1)
+            # # El libro siguiere esto:
+            # rango_var_xN1 = range(max(0, x1 - sum(demanda[:N])),
+            #                       min(x1, demanda[N]) + 1)
 
             val_utilizar = [ (F(N-1, x1 - xN1) +
                               G1(N, xN1) + G2(N, demanda[N] - xN1))
@@ -146,7 +166,7 @@ def F(N, x1):
             # xN1 = rango_var_xN1[ind]
 
             # schedule[(N, x1)] = ("PD = {0}, Dep 1 = {1}, Dep 2 = {2}".format(
-            #     N, rango_var_xN1[ind], demanda[N] - rango_var_xN1[ind]), xN1, demanda[N] - xN1)
+            #     N, demanda[N] - xN1), xN1, demanda[N] - xN1)
 
             x_N1 = rango_var_xN1[ind]
             x_N2 = demanda[N] - x_N1
@@ -154,6 +174,11 @@ def F(N, x1):
                 N, rango_var_xN1[ind], demanda[N] - rango_var_xN1[ind]),
                                  x_N1,
                                  x_N2)
+
+            # opt_schedule_cost2[N] = (
+            #     'D1 = ', schedule[(N, x1)][1], 'D2 = ',
+            #     schedule[(N, x1)][2], 'costo = ',
+            #     G1(N, schedule[(N, x1)][1]) + G2(N, schedule[(N, x1)][2]))
 
     return f_dict[(N, x1)]
 
