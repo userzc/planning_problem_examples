@@ -6,17 +6,8 @@ Ernest Bellman, pág 76 [96 pdf]
 
 """
 
-# REPORT: Se obtiene la distribución de envíos tal como se marca en la
-# solución del libro, sin embargo no se tiene el score debido a alguna
-# actualización en la construcción de las soluciones pues el score
-# para el depósito 0 no se muestra como el adecuado pero sí calcula el
-# correcto, ver el TODO.
-
-# TODO: Hay algo que no parece funcionar de manera apropiada en la
-# recursión, al igual que con las restricciones, pero pues se debería
-# de checar con más calma en ratos libres.
-
-# A prueba y error se tiene un espacio de soluciones:
+# De interntar resolver el problema a prueba y error se tiene un
+# espacio de soluciones:
 # \prod{\nchoosek{demanda_n + 2 - 1}{demanda_n}} = \prod{demanda_n} =
 # 1568434323456
 
@@ -57,8 +48,6 @@ demanda = np.array([0, 10, 25, 45, 15, 5, 15, 20, 15, 10, 20])
 f_dict = {}
 schedule = {}
 opt_schedule_cost = {}
-opt_schedule_cost2 = {}
-# opt_schedule_cost = [0 for i in range(10)]
 
 def G1(N, x1):
     """This function evaluates the polynomial return so that the function
@@ -72,7 +61,7 @@ def G1(N, x1):
         Resources in deposit 1.
 
     """
-    if x1 > 0:
+    if x1 != 0:
         return g1[N, 0] + (g1[N, 1] * x1) + g1[N, 2] * (x1 ** 2)
     else:
         return 0
@@ -89,7 +78,7 @@ def G2(N, x2):
         Resources in deposit 2.
 
     """
-    if x2 > 0:
+    if x2 != 0:
         return g2[N, 0] + (g2[N, 1] * x2) + g2[N, 2] * (x2 ** 2)
     else:
         return 0
@@ -136,26 +125,15 @@ def F(N, x1):
 
     """
 
-    # El rango de las comparaciones no parece ser el adecuado, quizá
-    # se tengan que relajar algunas de las restricciones
-
     global f_dict
     if (N, x1) not in f_dict:
         if N == 1:
-            # print "recursión base para {0}".format(N)
             f_dict[(N, x1)] = G1(N, x1) + G2(N, demanda[N] - x1)
             schedule[(N, x1)] = ("PD = {0}, Dep 1 = {1}, Dep 2 = {2}".format(
                 N, x1, demanda[N] - x1), x1, demanda[N] - x1)
-            # print "N", N
-            # print "demanda", demanda[N]
-            # print "x1", x1
         else:
-
-            rango_var_xN1 = range(0, demanda[N] + 1)
-
-            # # El libro siguiere esto:
-            # rango_var_xN1 = range(max(0, x1 - sum(demanda[:N])),
-            #                       min(x1, demanda[N]) + 1)
+            rango_var_xN1 = range(max(0, x1 - sum(demanda[:N])),
+                                  min(x1, demanda[N]) + 1)
 
             val_utilizar = [ (F(N-1, x1 - xN1) +
                               G1(N, xN1) + G2(N, demanda[N] - xN1))
@@ -163,10 +141,6 @@ def F(N, x1):
 
             f_dict[(N, x1)] = min(val_utilizar)
             ind = val_utilizar.index(f_dict[(N, x1)])
-            # xN1 = rango_var_xN1[ind]
-
-            # schedule[(N, x1)] = ("PD = {0}, Dep 1 = {1}, Dep 2 = {2}".format(
-            #     N, demanda[N] - xN1), xN1, demanda[N] - xN1)
 
             x_N1 = rango_var_xN1[ind]
             x_N2 = demanda[N] - x_N1
@@ -174,11 +148,6 @@ def F(N, x1):
                 N, rango_var_xN1[ind], demanda[N] - rango_var_xN1[ind]),
                                  x_N1,
                                  x_N2)
-
-            # opt_schedule_cost2[N] = (
-            #     'D1 = ', schedule[(N, x1)][1], 'D2 = ',
-            #     schedule[(N, x1)][2], 'costo = ',
-            #     G1(N, schedule[(N, x1)][1]) + G2(N, schedule[(N, x1)][2]))
 
     return f_dict[(N, x1)]
 
@@ -188,16 +157,21 @@ def F(N, x1):
 # costo_min = min(costos_totales)
 # print costos_totales.index(costo_min), costo_min
 
-print "F(10, 180) = ", F(10, 180)
-reconstruct_schedule(10, 180)
-print "Se calcularon " + str(len(schedule)) + " puntos"
-for k in opt_schedule_cost.keys():
-    print "PD{0}: ".format(k + 1), opt_schedule_cost[k]
-# print costos_totales
+print "F(10, 100) = ", F(10, 100)
+reconstruct_schedule(10, 100)
+
+# print "Se calcularon " + str(len(schedule)) + " puntos"
+# for k in opt_schedule_cost.keys():
+#     print "Punto de Demanda {0}: D1 = {1}, D2 = {2}; Costo ="
+#     "{3}".format(
+#         k + 1,
+#         opt_schedule_cost[k][1],
+#         opt_schedule_cost[k][3],
+#         opt_schedule_cost[k][5])
 
 # Se supone que se envían 100 unidades del depósito 1 y 80 del depósito 2.
 
-# La solución óptima es
+# La solución óptima reportada en el libro es
 
 # | Demanda | Al PD | De Dep 1 | De Dep 2 |  Costo | Costo Acum |
 # |---------+-------+----------+----------+--------+------------|
