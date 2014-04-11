@@ -1,6 +1,5 @@
 #  -*- encoding: utf-8 -*-
 import glpk
-# import itertools.chain_from_iterable
 from itertools import chain
 
 lp = glpk.LPX()
@@ -27,7 +26,7 @@ unidades_req = [4000, 5000, 3000]
 lp.rows.add(3 + 4)
 for elem in range(len(horas_disp)):
     lp.rows[elem].name = "Horas disponibles en máquina {0}".format(elem)
-    lp.rows[elem].bounds = horas_disp[elem]
+    lp.rows[elem].bounds = 0, horas_disp[elem]
 for elem in range(len(unidades_req)):
     lp.rows[4 + elem].name = "Unidades Prod {0} requeridas".format(elem)
     lp.rows[4 + elem].bounds = unidades_req[elem]
@@ -41,19 +40,15 @@ for c in lp.cols:
 # Declaración de las restricciones
 restricciones = []
 
-# Se empieza con las restricciones de las horas dispoibles:
+# Se empieza con las restricciones de las horas disponibles:
 for i in range(len(unidades_req)):
     for j in range(len(horas_disp)):
-        # print "declarando ren {0} y col {1}".format(i, j)
         restricciones.append((j, i * 4  + j , tiempos[i][j]))
-        # restricciones.append((j, i * 4  + j , 1.0))
 
 # Terminando por restricciones de unidades requeridas:
 for i in range(len(unidades_req)):
     for j in range(len(horas_disp)):
-        # print "declarando ren {0} y col {1}".format(i, j)
         restricciones.append((i + 4, i * 4 + j, 1.0))
-        # restricciones.append((i + 4, i * 4 + j, tiempos[i][j]))
 
 lp.matrix = restricciones
 
@@ -61,12 +56,20 @@ print "**********"
 for row in lp.rows:
     print "----------"
     print row.name
-    print row.bounds
-    print row.matrix
+    # print row.bounds
+    message = " + ".join(
+        [str(r[1])+str(lp.cols[r[0]].name) for r in row.matrix])
+    if row.bounds[0] != row.bounds[1]:
+        message = (str(row.bounds[0]) + " <= " + message + " <= " +
+                   str(row.bounds[1]))
+    else:
+        message += " = "+str(row.bounds[0])
+    print message
 print "**********"
 
 # Función objetivo
-func_obj = list(chain.from_iterable(costos))
+# func_obj = list(chain.from_iterable(costos))
+func_obj = [costos[i][j] * tiempos[i][j] for i in range(3) for j in range(4)]
 
 print "función objetivo", func_obj
 

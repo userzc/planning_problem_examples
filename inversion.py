@@ -42,6 +42,7 @@ lp.obj[7, 8, 9] = [1.17, 1.08, 1.27]
 
 lp.simplex()
 # lp.interior()
+# lp.intopt()
 
 print "Z = {0}".format(lp.obj.value)
 print "\n".join('{0}[{2}] = {1}'.format(c.name, c.primal, c.index) for
