@@ -19,6 +19,10 @@ public class Product {
 
   public Product() {}
 
+  public Product(int originDeposit) {
+    this.originDeposit = originDeposit;
+  }
+
   public Product(
       int originDeposit,
       DemandPoint toDP) {

@@ -1,0 +1,50 @@
+package com.veureka;
+
+import com.veureka.domain.DemandPoint;
+import com.veureka.domain.Product;
+import com.veureka.domain.Costs;
+import com.veureka.domain.Supplies;
+
+import org.optaplanner.core.api.score.buildin.simplebigdecimal.SimpleBigDecimalScoreHolder;
+
+global SimpleBigDecimalScoreHolder scoreHolder;
+
+// Count all the products that ship from the same origin to the same destiny
+rule "ShipmentCost"
+    when
+	$total_prod: Number() from accumulate($p:Product($od: originDeposit, $dp: toDP),
+					      count($p))
+	eval($total_prod > 0)
+    then
+	scoreHolder.addConstraintMatch(
+	    kcontext,
+	    - Costs[dp.id][originDeposit][0]
+	    - Costs[dp.id][originDeposit][1] * $total_prod
+	    - Costs[dp.id][originDeposit][2] * Math.pow($total_prod, 2));
+end
+
+
+// Make sure that the DemandPoints have the apropriate number of
+// elements shipped to them.
+rule "satisfyDemandPoint"
+    salience -1
+    when
+	$dp: DemandPoint($reqResource: reqRescQuantity)
+	$total: Number() from accumulate(Product(toDP == $dp), count($dp))
+    then
+	scoreHolder.addConstraintMatch(
+	    kcontext, - Math.abs($reqResource - total));
+end
+
+// TODO: This part needs to be verified
+// Make sure that the Deposits ship all their supplies
+rule "emptyDeposit"
+    salience -1
+    when
+	$total_deposit_shipment: Number() from acumulate(
+	    $p: Product($i: originDeposit),
+	    count($p))
+    then
+	scoreHolder.addConstraintMatch(
+	    kcontext, - Math.abs(Supplies.deposits[$i] - $total_deposit_shipment));
+end

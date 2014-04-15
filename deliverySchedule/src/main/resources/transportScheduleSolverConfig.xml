@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver>
+  <environmentMode>REPRODUCIBLE</environmentMode>
+  <solutionClass>com.veureka.domain.TransportSchedule</solutionClass>
+  <planningEntityClass>com.veureka.domain.Product</planningEntityClass>
+
+  <!-- relative to resources -->
+  <scoreDirectorFactory>
+    <scoreDefinitionType>SIMPLE_BIG_DECIMAL</scoreDefinitionType>
+    <!-- relative to resources ¿? -->
+    <scoreDrl>/transportScheduleScoreRules.drl</scoreDrl>
+  </scoreDirectorFactory>
+
+  <constructionHeuristic>
+    <constructionHeuristicType>FIRST_FIT</constructionHeuristicType>
+  </constructionHeuristic>
+  <localSearch>
+    <termination>
+      <terminationCompositionStyle>OR</terminationCompositionStyle>
+      <maximumStepCount>100</maximumStepCount>
+      <scoreAttained>0</scoreAttained>
+    </termination>
+    <acceptor>
+      <solutionTabuSize>1000</solutionTabuSize>
+    </acceptor>
+    <forager>
+      <pickEarlyType>NEVER</pickEarlyType>
+    </forager>
+  </localSearch>
+</solver>

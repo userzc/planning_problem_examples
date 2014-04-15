@@ -4,18 +4,17 @@ import com.veureka.domain.DemandPoint;
 import com.veureka.domain.Product;
 
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
 import org.optaplanner.core.api.domain.value.ValueRangeProvider;
-import org.optaplanner.core.api.score.buildin.simple.SimpleBigDecimalScore;
-import org.optaplanner.core.impl.score.buildin.simple.SimpleBigDecimalScoreDefinition;
+import org.optaplanner.core.api.score.buildin.simplebigdecimal.SimpleBigDecimalScore;
+// import org.optaplanner.core.impl.score.buildin.simple.SimpleBigDecimalScoreDefinition;
 import org.optaplanner.core.impl.solution.Solution;
-
-// TODO: Use some sort of double score, maybe an int representing up
-// to a fixed number of significant digits
 
 @PlanningSolution
 public class TransportSchedule implements Solution<SimpleBigDecimalScore>{
@@ -40,9 +39,10 @@ public class TransportSchedule implements Solution<SimpleBigDecimalScore>{
     this.score = score;
   }
 
-  public Collections<? extends Object> getProblemFacts() {
-    List<Objects> facts = new ArrayList<Objects>();
+  public Collection<? extends Object> getProblemFacts() {
+    List<Object> facts = new ArrayList<Object>();
     facts.addAll(demandPoints);
+    return facts;
   }
 
   @ValueRangeProvider(id = "demandPointsRange")
@@ -53,5 +53,32 @@ public class TransportSchedule implements Solution<SimpleBigDecimalScore>{
   @PlanningEntityCollectionProperty
     public List<Product> getProducts() {
     return products;
+  }
+
+  public String toString() {
+    int count;
+    ArrayList<String> msg_list = new ArrayList<String>();
+    String msg = "";
+    for (int indx = 0; indx < 2; indx++) {
+      count = 0;
+      for (DemandPoint dp: demandPoints) {
+        for (Product prod : products) {
+          if (prod.getOriginDeposit() == indx + 1) count++;
+          // System.out.println("Deposit " +
+          //                    Integer.toString(indx + 1) +
+          //                    " => " + dp + " : "+
+          //                    Integer.toString(count));
+          msg_list.add("Deposit " +
+                  Integer.toString(indx + 1) +
+                  " => " + dp + " : "+
+                  Integer.toString(count));
+        }
+      }
+    }
+    for (int i = 0; i < 9; i++) {
+      msg += msg_list.get(i) + "\n";
+    }
+    msg += msg_list.get(10);
+    return msg;
   }
 }
