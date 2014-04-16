@@ -34,7 +34,7 @@ public class DemandPoint {
   }
 
   public String toString() {
-    return "DP: " + Integer.toString(id) + "[" +
+    return "DP " + Integer.toString(id) + " [" +
         Integer.toString(reqRescQuantity) + "]";
   }
 

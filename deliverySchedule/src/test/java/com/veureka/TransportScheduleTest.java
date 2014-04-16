@@ -24,20 +24,29 @@ public class TransportScheduleTest {
     List<Product> products = createProducts();
     List<DemandPoint> demandPoints = createDemandpoints();
 
-    XmlSolverFactory solverFactory = new XmlSolverFactory();
-    solverFactory.configure("/transportScheduleSolverConfig.xml");
-    Solver solver = solverFactory.buildSolver();
+    // XmlSolverFactory solverFactory = new XmlSolverFactory();
+    // solverFactory.configure("/transportScheduleSolverConfig.xml");
+    // Solver solver = solverFactory.buildSolver();
 
-    solver.setPlanningProblem(getInitialSolution(products, demandPoints));
-    solver.solve();
+    TransportSchedule initialSolution =
+        getInitialSolution(products, demandPoints);
 
-    TransportSchedule  finalSolution =
-        (TransportSchedule) solver.getBestSolution();
-
-    System.out.println("Proposed Schedule: " +
-                       finalSolution);
+    System.out.println("Initial Schedule: \n" +
+                       initialSolution);
     System.out.println("Cost: " +
-                       finalSolution.getScore());
+                       initialSolution.getScore());
+
+    // solver.setPlanningProblem(getInitialSolution(products, demandPoints));
+    // solver.solve();
+
+    // TransportSchedule  finalSolution =
+    //     (TransportSchedule) solver.getBestSolution();
+
+    // System.out.println("Proposed Schedule: " +
+    //                    finalSolution);
+    // System.out.println("Cost: " +
+    //                    finalSolution.getScore());
+
   }
 
   private TransportSchedule getInitialSolution(

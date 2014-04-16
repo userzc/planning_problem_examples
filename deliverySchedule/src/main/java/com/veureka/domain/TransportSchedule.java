@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
@@ -59,26 +60,25 @@ public class TransportSchedule implements Solution<SimpleBigDecimalScore>{
     int count;
     ArrayList<String> msg_list = new ArrayList<String>();
     String msg = "";
+
     for (int indx = 0; indx < 2; indx++) {
-      count = 0;
       for (DemandPoint dp: demandPoints) {
-        for (Product prod : products) {
-          if (prod.getOriginDeposit() == indx + 1) count++;
-          // System.out.println("Deposit " +
-          //                    Integer.toString(indx + 1) +
-          //                    " => " + dp + " : "+
-          //                    Integer.toString(count));
-          msg_list.add("Deposit " +
-                  Integer.toString(indx + 1) +
-                  " => " + dp + " : "+
-                  Integer.toString(count));
-        }
+        count = 0;
+        for (Product prod : products)
+          if (prod.getOriginDeposit() == indx + 1 &&
+              prod.getToDP() == dp) count++;
+        msg_list.add("Deposit " +
+                     Integer.toString(indx + 1) +
+                     " => " + dp + " : "+
+                     Integer.toString(count));
       }
     }
-    for (int i = 0; i < 9; i++) {
+
+    for (int i = 0; i < 19; i++) {
       msg += msg_list.get(i) + "\n";
     }
-    msg += msg_list.get(10);
+
+    msg += msg_list.get(19);
     return msg;
   }
 }
