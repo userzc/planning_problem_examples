@@ -66,9 +66,9 @@ public class TransportScheduleTest {
   private static List<DemandPoint> createDemandpoints() {
     int demands[] = {0, 10, 25, 45, 15, 5, 15, 20, 15, 10, 20};
     ArrayList<DemandPoint> demandPoints = new ArrayList<DemandPoint>();
-    for (int i = 0; i < 10; i++) {
+    for (int i = 1; i < 11; i++) {
       demandPoints.add(
-          new DemandPoint(demands[i + 1], i + 1));
+          new DemandPoint(demands[i], i));
     }
     return demandPoints;
   }

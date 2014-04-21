@@ -4,9 +4,9 @@
   <solutionClass>com.veureka.domain.TransportSchedule</solutionClass>
   <planningEntityClass>com.veureka.domain.Product</planningEntityClass>
 
-  <termination>
-    <maximumSecondsSpend>1</maximumSecondsSpend>
-  </termination>
+  <!-- <termination> -->
+  <!--   <maximumSecondsSpend>1</maximumSecondsSpend> -->
+  <!-- </termination> -->
 
   <!-- relative to resources -->
   <scoreDirectorFactory>
