@@ -1,0 +1,24 @@
+* Planning Problems Examples
+
+  This repository holds a few planning problems examples and it
+  solutions using OptaPlanner and other suggested methods in the
+  literature.
+
+  Solutions other than OptaPlanner use python and a few dependencies
+  listed below.
+
+** Python dependencies
+
+*** Ubuntu 13.10
+
+    The linear programming problems are declared and solved using the
+    [[http://tfinley.net/software/pyglpk/discussion.html][PyGLPK library]], the ubuntu package boundled in 13.10 is not recent
+    enough, installation with [[http://www.pip-installer.org/en/latest/][pip]] inside a virtual environment is
+    recommended but not mandatory. The required libraries for PyGLPK
+    can be obtained from the ubuntu repositories.
+
+*** Other Versions
+
+    The python package is the same but the sources for the needed
+    libraries are dependant on the system, no testing has been made on
+    systems other than ubuntu, but it should work.
