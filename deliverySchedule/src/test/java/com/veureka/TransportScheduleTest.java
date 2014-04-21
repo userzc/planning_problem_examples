@@ -34,8 +34,9 @@ public class TransportScheduleTest {
     System.out.println("Initial Schedule: \n" +
                        initialSolution);
     System.out.println("----------");
-    // System.out.println("Cost: " +
-    //                    initialSolution.getSoftScore());
+    System.out.println("Cost: " +
+                       initialSolution.getScore());
+    System.out.println();
 
     solver.setPlanningProblem(getInitialSolution(products, demandPoints));
     solver.solve();
@@ -47,8 +48,9 @@ public class TransportScheduleTest {
     System.out.println("Proposed Schedule: \n" +
                        finalSolution);
     System.out.println("----------");
-    // System.out.println("Cost: " +
-    //                    finalSolution.getSoftScore());
+    System.out.println("Cost: " +
+                       finalSolution.getScore());
+    System.out.println();
 
   }
 

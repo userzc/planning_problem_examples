@@ -23,7 +23,7 @@
   <localSearch>
     <termination>
       <terminationCompositionStyle>OR</terminationCompositionStyle>
-      <maximumStepCount>1000</maximumStepCount>
+      <maximumStepCount>20000</maximumStepCount>
       <!-- <scoreAttained>0</scoreAttained> -->
       <scoreAttained>0hard/0soft</scoreAttained>
     </termination>
