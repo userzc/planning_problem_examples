@@ -9,6 +9,8 @@ import org.optaplanner.core.api.score.buildin.hardsoftbigdecimal.HardSoftBigDeci
 // import org.optaplanner.core.api.score.buildin.simplebigdecimal.SimpleBigDecimalScoreHolder;
 // import org.optaplanner.core.api.score.buildin.simple.SimpleScoreHolder;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 global HardSoftBigDecimalScoreHolder scoreHolder;
 
@@ -25,7 +27,9 @@ rule "countProducts"
 	accumulate($p: Product ($dp := toDP, originDeposit == $originDeposit);
 		   $s: count($p))
     then
+	MathContext context = new MathContext(10, RoundingMode.HALF_EVEN);
 	BigDecimal BD_temp = BigDecimal.ZERO;
+	// BigDecimal BD_temp = new BigDecimal(0, context);
 	System.out.println("Depo " + Integer.toString($originDeposit) + "/ " +
 			   $dp + " : " + $s);
 	// System.out.println("Using index [" +
