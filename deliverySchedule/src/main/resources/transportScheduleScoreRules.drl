@@ -32,7 +32,20 @@ salience -1
 	accumulate($p: Product ($dp := toDP, originDeposit == $idx);
 		   $s: count($p))
     then
-	System.out.println("Deposit " + Integer.toString($idx) + " " + $dp + " : " + $s);
+	System.out.println("Depo " + Integer.toString($idx) + "/ " + $dp + " : " + $s);
+	// System.out.println();
+end
+
+rule "countProductsByDP"
+salience -1
+    when
+	// there is an option of Count, but there's no example located
+	// so far
+	$dp := DemandPoint()
+	accumulate($p: Product ($dp := toDP);
+		   $s: count($p))
+    then
+	System.out.println("By DP basis; " + $dp + " : " + $s);
 	// System.out.println();
 end
 
