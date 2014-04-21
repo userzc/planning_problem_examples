@@ -11,7 +11,8 @@
   <!-- relative to resources -->
   <scoreDirectorFactory>
     <!-- <scoreDefinitionType>SIMPLE_BIG_DECIMAL</scoreDefinitionType> -->
-    <scoreDefinitionType>HARD_SOFT_BIG_DECIMAL</scoreDefinitionType>
+    <!-- <scoreDefinitionType>HARD_SOFT_BIG_DECIMAL</scoreDefinitionType> -->
+    <scoreDefinitionType>HARD_SOFT</scoreDefinitionType>
     <!-- relative to resources ¿? -->
     <scoreDrl>/transportScheduleScoreRules.drl</scoreDrl>
   </scoreDirectorFactory>
@@ -22,7 +23,7 @@
   <localSearch>
     <termination>
       <terminationCompositionStyle>OR</terminationCompositionStyle>
-      <maximumStepCount>100</maximumStepCount>
+      <maximumStepCount>1000</maximumStepCount>
       <!-- <scoreAttained>0</scoreAttained> -->
       <scoreAttained>0hard/0soft</scoreAttained>
     </termination>

@@ -1,33 +1,31 @@
 package com.veureka.domain;
 
-import java.math.BigDecimal;
-
 public class Costs {
 
   // g is just a "foo" name, perhaps is worth rename it
-  public static BigDecimal g[][][] = new BigDecimal[][][] {
-    {{ new BigDecimal("0"), new BigDecimal("0"), new BigDecimal("0")},
-     { new BigDecimal("0"), new BigDecimal("1.0"), new BigDecimal("0")},
-     { new BigDecimal("1"), new BigDecimal("2.0"), new BigDecimal("0")},
-     { new BigDecimal("0"), new BigDecimal("3.0"), new BigDecimal("0.01")},
-     { new BigDecimal("0"), new BigDecimal("1.5"), new BigDecimal("0")},
-     { new BigDecimal("0"), new BigDecimal("2.5"), new BigDecimal("0")},
-     { new BigDecimal("10"), new BigDecimal("5.0"), new BigDecimal("-0.01")},
-     { new BigDecimal("0"), new BigDecimal("3.0"), new BigDecimal("0")},
-     { new BigDecimal("0"), new BigDecimal("6.0"), new BigDecimal("0")},
-     { new BigDecimal("8"), new BigDecimal("6.0"), new BigDecimal("-0.05")},
-     { new BigDecimal("0"), new BigDecimal("6.0"), new BigDecimal("0")}},
+  public static int g[][][] = new int[][][] {
+    {{  0,  0,  0},
+     {  0,  100,  0},
+     {  100,  200,  0},
+     {  0,  300,  1},
+     {  0,  150,  0},
+     {  0,  250,  0},
+     {  1000,  500,  -1},
+     {  0,  300,  0},
+     {  0,  600,  0},
+     {  8,  600,  -5},
+     {  0,  600,  0}},
 
-    {{new BigDecimal("0"), new BigDecimal("0"), new BigDecimal("0")},
-     {new BigDecimal("2"), new BigDecimal("3.1"), new BigDecimal("0")},
-     {new BigDecimal("0"), new BigDecimal("4.1"), new BigDecimal("0")},
-     {new BigDecimal("0"), new BigDecimal("2.1"), new BigDecimal("0")},
-     {new BigDecimal("0"), new BigDecimal("1.1"), new BigDecimal("0.1")},
-     {new BigDecimal("0"), new BigDecimal("2.6"), new BigDecimal("0")},
-     {new BigDecimal("0"), new BigDecimal("3.0"), new BigDecimal("0")},
-     {new BigDecimal("5"), new BigDecimal("1.0"), new BigDecimal("0.2")},
-     {new BigDecimal("0"), new BigDecimal("2.0"), new BigDecimal("0")},
-     {new BigDecimal("0"), new BigDecimal("2.0"), new BigDecimal("0")},
-     {new BigDecimal("0"), new BigDecimal("5.0"), new BigDecimal("0.01")}}};
+    {{ 0,  0,  0},
+     { 200,  310,  0},
+     { 0,  410,  0},
+     { 0,  210,  0},
+     { 0,  110,  10},
+     { 0,  260,  0},
+     { 0,  300,  0},
+     { 500,  10000,  200},
+     { 0,  200,  0},
+     { 0,  200,  0},
+     { 0,  500,  1}}};
 
 }

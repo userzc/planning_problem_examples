@@ -6,8 +6,6 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.ArrayList;
 
-import java.math.BigDecimal;
-
 import com.veureka.domain.Product;
 import com.veureka.domain.TransportSchedule;
 import com.veureka.domain.DemandPoint;
