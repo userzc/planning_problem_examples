@@ -24,28 +24,33 @@ public class TransportScheduleTest {
     List<Product> products = createProducts();
     List<DemandPoint> demandPoints = createDemandpoints();
 
-    // XmlSolverFactory solverFactory = new XmlSolverFactory();
-    // solverFactory.configure("/transportScheduleSolverConfig.xml");
-    // Solver solver = solverFactory.buildSolver();
+    XmlSolverFactory solverFactory = new XmlSolverFactory();
+    solverFactory.configure("/transportScheduleSolverConfig.xml");
+    Solver solver = solverFactory.buildSolver();
 
     TransportSchedule initialSolution =
         getInitialSolution(products, demandPoints);
 
+
+    System.out.println("----------");
     System.out.println("Initial Schedule: \n" +
                        initialSolution);
-    System.out.println("Cost: " +
-                       initialSolution.getScore());
-
-    // solver.setPlanningProblem(getInitialSolution(products, demandPoints));
-    // solver.solve();
-
-    // TransportSchedule  finalSolution =
-    //     (TransportSchedule) solver.getBestSolution();
-
-    // System.out.println("Proposed Schedule: " +
-    //                    finalSolution);
+    System.out.println("----------");
     // System.out.println("Cost: " +
-    //                    finalSolution.getScore());
+    //                    initialSolution.getSoftScore());
+
+    solver.setPlanningProblem(getInitialSolution(products, demandPoints));
+    solver.solve();
+
+    TransportSchedule finalSolution =
+        (TransportSchedule) solver.getBestSolution();
+
+    System.out.println("----------");
+    System.out.println("Proposed Schedule: \n" +
+                       finalSolution);
+    System.out.println("----------");
+    // System.out.println("Cost: " +
+    //                    finalSolution.getSoftScore());
 
   }
 

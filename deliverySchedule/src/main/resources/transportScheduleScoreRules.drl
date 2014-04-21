@@ -5,69 +5,125 @@ import com.veureka.domain.Product;
 import com.veureka.domain.Costs;
 import com.veureka.domain.Supplies;
 
-import org.optaplanner.core.api.score.buildin.simplebigdecimal.SimpleBigDecimalScoreHolder;
+import org.optaplanner.core.api.score.buildin.hardsoftbigdecimal.HardSoftBigDecimalScoreHolder;
+// import org.optaplanner.core.api.score.buildin.simplebigdecimal.SimpleBigDecimalScoreHolder;
+// import org.optaplanner.core.api.score.buildin.simple.SimpleScoreHolder;
+import java.math.BigDecimal;
 
-global SimpleBigDecimalScoreHolder scoreHolder;
+global HardSoftBigDecimalScoreHolder scoreHolder
+
+// global SimpleBigDecimalScoreHolder scoreHolder;
+// global SimpleScoreHolder count1;
+
+// rule "demandPoints"
+//     when
+// 	$dp : DemandPoint()
+//     then
+// 	System.out.println($dp);
+// end
+
+rule "countProducts"
+salience -1
+    when
+	// there is an option of Count, but there's no example located
+	// so far
+	$idx := Integer()
+	$dp := DemandPoint()
+	accumulate($p: Product ($dp := toDP, originDeposit == $idx);
+		   $s: count($p))
+    then
+	System.out.println("Deposit " + Integer.toString($idx) + " " + $dp + " : " + $s);
+	// System.out.println();
+end
+
+// rule "Products"
+//     when
+// 	// there is an option of Count, but there's no example located
+// 	// so far
+// 	$p : Product($dp : toDP, $d : originDeposit)
+//     then
+// 	System.out.println($dp + "  " + Integer.toString($d));
+// end
+
+// rule "FirstCounter"
+//     when
+// 	Product(originDeposit == 1)
+//     then
+// 	count1.addConstraintMatch(kcontext, 1);
+// end
+
+// rule "ConstraintCounter"
+// salience -1
+//     when
+// 	// Esto no ejecuta la regla muchas veces?, sólo quería que se
+// 	// ejecutara una vez por movimiento
+// 	// Product()
+// 	eval( true )
+//     then
+// 	// scoreHolder.addConstraintMatch(kcontext, - BigDecimal(count1.getScore()));
+// 	scoreHolder.addConstraintMatch(kcontext, new BigDecimal(- count1.getScore()));
+// end
 
 // Count all the products that ship from the same origin to the same
 // destiny, ideally it should be possible to bind the origin and
 // destination automatically
 
-rule "ShipmentCost"
-    when
-	// $od and $dp should be binded automatically
-	$total_prod: Number() from accumulate($p:Product($od: originDeposit, $dp: toDP),
-					      count($np))
-	eval($total_prod > 0)
-    then
-	// This should be a function of some sort
-	scoreHolder.addConstraintMatch(
-	    kcontext,
-	    - Costs[dp.id][originDeposit][0]
-	    - Costs[dp.id][originDeposit][1] * $total_prod
-	    - Costs[dp.id][originDeposit][2] * Math.pow($total_prod, 2));
-end
+// rule "ShipmentCost"
+//     when
+// 	// $od and $dp should be binded automatically
+// 	$total_prod: Number() from accumulate($p:Product($od: originDeposit, $dp: toDP),
+// 					      count($np))
+// 	eval($total_prod > 0)
+//     then
+// 	// This should be a function of some sort
+// 	scoreHolder.addConstraintMatch(
+// 	    kcontext,
+// 	    - Costs[dp.id][originDeposit][0]
+// 	    - Costs[dp.id][originDeposit][1] * $total_prod
+// 	    - Costs[dp.id][originDeposit][2] * Math.pow($total_prod, 2));
+// end
 
 
 // Make sure that the DemandPoints have the apropriate number of
 // elements shipped to them.
 
-rule "satisfyDemandPoint"
-    salience -1
-    when
-	// I wanted that, given a $dp, all products being shipped
-	// there should be counted and store it in $total so to use it in
-	// a rule, perhaps there is a way to make this global
-	$dp: DemandPoint($reqResource: reqRescQuantity)
-	$total: Number() from accumulate(Product(toDP == $dp), count($dp))
-    then
-	scoreHolder.addConstraintMatch(
-	    kcontext, - Math.abs($reqResource - total));
-end
+// rule "satisfyDemandPoint"
+//     salience -1
+//     when
+// 	// I wanted that, given a $dp, all products being shipped
+// 	// there should be counted and store it in $total so to use it in
+// 	// a rule, perhaps there is a way to make this global
+// 	$dp: DemandPoint($reqResource: reqRescQuantity)
+// 	$total: Number() from accumulate(Product(toDP == $dp), count($dp))
+//     then
+// 	scoreHolder.addConstraintMatch(
+// 	    kcontext, - Math.abs($reqResource - total));
+// end
 
 // TODO: This part needs to be verified
 // Make sure that the Deposits ship all their supplies
-rule "emptyDeposit"
-    salience -1
-    when
-	// I wanted that, given a origenDeposit id $i, all products
-	// shipped from that deposit should be counted and store it in
-	// $total_deposit_shipment to use it in a rule, perhaps there
-	// is a way to make this global
-	$total_deposit_shipment: Number() from acumulate(
-	    $p: Product($i: originDeposit),
-	    count($p))
-    then
-	scoreHolder.addConstraintMatch(
-	    kcontext, - Math.abs(Supplies.deposits[$i] - $total_deposit_shipment));
-end
 
+// rule "emptyDeposit"
+//     salience -1
+//     when
+// 	// I wanted that, given a origenDeposit id $i, all products
+// 	// shipped from that deposit should be counted and store it in
+// 	// $total_deposit_shipment to use it in a rule, perhaps there
+// 	// is a way to make this global
+// 	$total_deposit_shipment: Number() from acumulate(
+// 	    $p: Product($i: originDeposit),
+// 	    count($p))
+//     then
+// 	scoreHolder.addConstraintMatch(
+// 	    kcontext, - Math.abs(Supplies.deposits[$i] - $total_deposit_shipment));
+// end
 
 // This Rule is just a prototype, it's not meant to be useful at this point
 // Use something like this:
-rule "checkProduct"
-    when
-	Product($id: id, $dp: toDp)
-    then
-	count($id, $dp).add(1);
-end
+
+// rule "checkProduct"
+//     when
+// 	Product($id: id, $dp: toDp)
+//     then
+// 	count($id, $dp).add(1);
+// end

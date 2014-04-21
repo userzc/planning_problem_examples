@@ -13,15 +13,18 @@ import java.util.HashMap;
 import org.optaplanner.core.api.domain.solution.PlanningEntityCollectionProperty;
 import org.optaplanner.core.api.domain.solution.PlanningSolution;
 import org.optaplanner.core.api.domain.value.ValueRangeProvider;
-import org.optaplanner.core.api.score.buildin.simplebigdecimal.SimpleBigDecimalScore;
+// import org.optaplanner.core.api.score.buildin.simplebigdecimal.SimpleBigDecimalScore;
+
+// Se intenta utilizar este nuevo tipo de score
+import org.optaplanner.core.api.score.buildin.hardsoftbigdecimal.HardSoftBigDecimalScore;
 // import org.optaplanner.core.impl.score.buildin.simple.SimpleBigDecimalScoreDefinition;
 import org.optaplanner.core.impl.solution.Solution;
 
 @PlanningSolution
-public class TransportSchedule implements Solution<SimpleBigDecimalScore>{
+public class TransportSchedule implements Solution<HardSoftBigDecimalScore>{
   private List<Product> products;
   private List<DemandPoint> demandPoints;
-  private SimpleBigDecimalScore score;
+  private HardSoftBigDecimalScore score;
 
   public TransportSchedule() {}
 
@@ -32,17 +35,19 @@ public class TransportSchedule implements Solution<SimpleBigDecimalScore>{
     this.demandPoints = demandPoints;
   }
 
-  public SimpleBigDecimalScore getScore() {
+  public HardSoftBigDecimalScore getScore() {
     return score;
   }
 
-  public void setScore(SimpleBigDecimalScore score) {
+  public void setScore(HardSoftBigDecimalScore score) {
     this.score = score;
   }
 
   public Collection<? extends Object> getProblemFacts() {
     List<Object> facts = new ArrayList<Object>();
     facts.addAll(demandPoints);
+    facts.add(1);
+    facts.add(2);
     return facts;
   }
 

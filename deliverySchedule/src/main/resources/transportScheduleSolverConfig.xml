@@ -4,9 +4,14 @@
   <solutionClass>com.veureka.domain.TransportSchedule</solutionClass>
   <planningEntityClass>com.veureka.domain.Product</planningEntityClass>
 
+  <termination>
+    <maximumSecondsSpend>1</maximumSecondsSpend>
+  </termination>
+
   <!-- relative to resources -->
   <scoreDirectorFactory>
-    <scoreDefinitionType>SIMPLE_BIG_DECIMAL</scoreDefinitionType>
+    <!-- <scoreDefinitionType>SIMPLE_BIG_DECIMAL</scoreDefinitionType> -->
+    <scoreDefinitionType>HARD_SOFT_BIG_DECIMAL</scoreDefinitionType>
     <!-- relative to resources ¿? -->
     <scoreDrl>/transportScheduleScoreRules.drl</scoreDrl>
   </scoreDirectorFactory>
@@ -18,13 +23,15 @@
     <termination>
       <terminationCompositionStyle>OR</terminationCompositionStyle>
       <maximumStepCount>100</maximumStepCount>
-      <scoreAttained>0</scoreAttained>
+      <!-- <scoreAttained>0</scoreAttained> -->
+      <scoreAttained>0hard/0soft</scoreAttained>
     </termination>
     <acceptor>
       <solutionTabuSize>1000</solutionTabuSize>
     </acceptor>
     <forager>
-      <pickEarlyType>NEVER</pickEarlyType>
+      <!-- <pickEarlyType>NEVER</pickEarlyType> -->
+      <acceptedCountLimit>10</acceptedCountLimit>
     </forager>
   </localSearch>
 </solver>
