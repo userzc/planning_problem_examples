@@ -10,7 +10,7 @@ import org.optaplanner.core.api.score.buildin.hardsoftbigdecimal.HardSoftBigDeci
 // import org.optaplanner.core.api.score.buildin.simple.SimpleScoreHolder;
 import java.math.BigDecimal;
 
-global HardSoftBigDecimalScoreHolder scoreHolder
+global HardSoftBigDecimalScoreHolder scoreHolder;
 
 // global SimpleBigDecimalScoreHolder scoreHolder;
 // global SimpleScoreHolder count1;
