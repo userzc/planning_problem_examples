@@ -34,10 +34,10 @@ rule "AvailHours"
 
     then
         int temp = Costs.hrs[0][$mach.getId() - 1]*$s1.intValue()
-	+ Costs.hrs[0][$mach.getId() - 1]*$s2.intValue()
-	+ Costs.hrs[0][$mach.getId() - 1]*$s3.intValue();
+	+ Costs.hrs[1][$mach.getId() - 1]*$s2.intValue()
+	+ Costs.hrs[2][$mach.getId() - 1]*$s3.intValue();
 	int temp2 = temp - AvailHours.vals[$mach.getId() - 1];
-	if ( temp2 < 0)
+	if ( temp2 > 0)
             scoreHolder.addHardConstraintMatch(
-		kcontext, temp2);
+		kcontext,  -temp2);
 end

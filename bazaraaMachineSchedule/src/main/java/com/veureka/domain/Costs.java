@@ -6,7 +6,7 @@ public class Costs {
    {6, 7, 5, 6},
    {12, 10, 8, 11}};
 
-  // El escalamiento está en centésimos de horas, en base decimal
+  // El escalamiento está en milésimos de horas, en base decimal
   static public int hrs[][] = {
     {300, 250, 200, 200},
     {200, 300, 200, 250},

@@ -1,6 +1,6 @@
 * Planning Problems Examples
 
-  This repository holds a few planning problems examples and it
+  This repository holds a few planning problems examples and its
   solutions using OptaPlanner and other suggested methods in the
   literature.
 
@@ -15,7 +15,19 @@
     [[http://tfinley.net/software/pyglpk/discussion.html][PyGLPK library]], the ubuntu package boundled in 13.10 is not recent
     enough, installation with [[http://www.pip-installer.org/en/latest/][pip]] inside a virtual environment is
     recommended but not mandatory. The required libraries for PyGLPK
-    can be obtained from the ubuntu repositories.
+    can be obtained from the ubuntu repositories with the commands:
+
+    #+begin_src sh
+    aptitude install glpk libgmp-dev
+    #+end_src
+
+    Then the PyGLPK package can be installed, optionally inside a
+    virtualenv, with:
+
+    #+begin_src sh
+    pip install glpk
+    #+end_src
+
 
 *** Other Versions
 
