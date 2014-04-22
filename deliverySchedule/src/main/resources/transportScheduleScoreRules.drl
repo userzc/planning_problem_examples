@@ -6,9 +6,6 @@ import com.veureka.domain.Costs;
 import com.veureka.domain.Supplies;
 
 import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScoreHolder;
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 
 global HardSoftScoreHolder scoreHolder;
 
@@ -20,14 +17,10 @@ rule "countProducts"
 	accumulate($p: Product ($dp := toDP, originDeposit == $originDeposit);
 		   $s: count($p))
     then
-	// MathContext context = new MathContext(10, RoundingMode.HALF_EVEN);
-	// BigDecimal BD_temp = BigDecimal.ZERO;
 	int temp = 0;
-	// System.out.println("Depo " + Integer.toString($originDeposit) + "/ " +
-	// 		   $dp + " : " + $s);
-	temp -= Costs.g[$originDeposit - 1][$dp.getId()][0] ;
-	temp -= Costs.g[$originDeposit - 1][$dp.getId()][1] * $s.intValue() ;
-	temp -= Costs.g[$originDeposit - 1][$dp.getId()][2] * Math.pow($s.intValue(), 2) ;
+	temp -= Costs.vals[$originDeposit - 1][$dp.getId()][0] ;
+	temp -= Costs.vals[$originDeposit - 1][$dp.getId()][1] * $s.intValue() ;
+	temp -= Costs.vals[$originDeposit - 1][$dp.getId()][2] * Math.pow($s.intValue(), 2) ;
 
 	scoreHolder.addSoftConstraintMatch(kcontext, temp);
 end
@@ -39,7 +32,6 @@ rule "countProductsByDP"
 	accumulate($p: Product ($dp := toDP);
 		   $s: count($p))
     then
-	// System.out.println("By DP basis; " + $dp + " : " + $s);
 	scoreHolder.addHardConstraintMatch(
 	    kcontext,
 	    - Math.abs($dp.getReqRescQuantity() - $s.intValue()));

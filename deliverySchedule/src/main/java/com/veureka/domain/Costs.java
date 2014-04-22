@@ -2,8 +2,7 @@ package com.veureka.domain;
 
 public class Costs {
 
-  // g is just a "foo" name, perhaps is worth rename it
-  public static int g[][][] = new int[][][] {
+  public static int vals[][][] = new int[][][] {
     {{  0,  0,  0},
      {  0,  100,  0},
      {  100,  200,  0},
