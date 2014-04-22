@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.veureka.MachineScheduleTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 235.166 sec - in com.veureka.MachineScheduleTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 245.533 sec - in com.veureka.MachineScheduleTest
