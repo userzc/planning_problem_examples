@@ -1,0 +1,34 @@
+package com.veureka;
+
+// Simple score calculator, as in nQueensScoreRules.drl
+import org.optaplanner.core.api.score.buildin.simple.SimpleScoreHolder;
+
+import java.util.EnumSet;
+import java.util.Set;
+import com.veureka.domain.ServiceRequest;
+import com.veureka.domain.Skill;
+
+global SimpleScoreHolder scoreHolder;
+
+rule "sameCity"
+    when
+	$sd: ServiceRequest(technician.location != location)
+    then
+	scoreHolder.addConstraintMatch(kcontext, -1);
+end
+
+rule "isBusy"
+    when
+	$sd: ServiceRequest(technician.busy == true)
+    then
+	scoreHolder.addConstraintMatch(kcontext, -6);
+end
+
+rule "skillMatch"
+    when
+	$sd: ServiceRequest($neededSkills: neededSkills, $tec: technician)
+    then
+	Set<Skill> tempSkills = EnumSet.copyOf($neededSkills);
+	tempSkills.removeAll($tec.getSkills());
+	scoreHolder.addConstraintMatch(kcontext, - tempSkills.size() * 3);
+end
