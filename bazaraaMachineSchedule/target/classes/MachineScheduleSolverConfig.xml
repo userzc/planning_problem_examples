@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver>
+  <environmentMode>REPRODUCIBLE</environmentMode>
+  <solutionClass>com.veureka.domain.MachineScheduleSolution</solutionClass>
+  <planningEntityClass>com.veureka.domain.Product</planningEntityClass>
+
+  <!-- <termination> -->
+  <!--   <maximumSecondsSpend>1</maximumSecondsSpend> -->
+  <!-- </termination> -->
+
+  <scoreDirectorFactory>
+    <scoreDefinitionType>HARD_SOFT</scoreDefinitionType>
+    <!-- relative to resources -->
+    <scoreDrl>/MachineScheduleRules.drl</scoreDrl>
+  </scoreDirectorFactory>
+
+  <constructionHeuristic>
+    <constructionHeuristicType>FIRST_FIT</constructionHeuristicType>
+  </constructionHeuristic>
+  <localSearch>
+    <termination>
+      <terminationCompositionStyle>OR</terminationCompositionStyle>
+      <maximumStepCount>20000</maximumStepCount>
+      <!-- <scoreAttained>0</scoreAttained> -->
+      <scoreAttained>0hard/0soft</scoreAttained>
+    </termination>
+    <acceptor>
+      <solutionTabuSize>1000</solutionTabuSize>
+    </acceptor>
+    <forager>
+      <acceptedCountLimit>10</acceptedCountLimit>
+      <!-- <pickEarlyType>NEVER</pickEarlyType> -->
+    </forager>
+  </localSearch>
+</solver>

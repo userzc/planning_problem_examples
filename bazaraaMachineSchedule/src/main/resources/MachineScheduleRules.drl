@@ -1,0 +1,43 @@
+package com.veureka;
+
+import com.veureka.domain.Product;
+import com.veureka.domain.Demand;
+import com.veureka.domain.AvailHours;
+import com.veureka.domain.MachineScheduleSolution;
+import com.veureka.domain.Machine;
+import com.veureka.domain.Costs;
+
+import org.optaplanner.core.api.score.buildin.hardsoft.HardSoftScoreHolder;
+
+global HardSoftScoreHolder scoreHolder;
+
+// Each product has a cost per machine and type
+rule "scoreProduct"
+    when
+        Product(  $t: tipo , $mach: inMachine)
+    then
+        scoreHolder.addSoftConstraintMatch(
+            kcontext,
+            - Costs.prods[$t - 1][$mach.getId() - 1]);
+end
+
+rule "AvailHours"
+    salience -1
+    when
+        $mach : Machine()
+        accumulate($p: Product(inMachine == $mach, tipo == 1),
+                   $s1: count($p))
+        accumulate($p: Product(inMachine == $mach, tipo == 2),
+                   $s2: count($p))
+        accumulate($p: Product(inMachine == $mach, tipo == 3),
+                   $s3: count($p))
+
+    then
+        int temp = Costs.hrs[0][$mach.getId() - 1]*$s1.intValue()
+	+ Costs.hrs[0][$mach.getId() - 1]*$s2.intValue()
+	+ Costs.hrs[0][$mach.getId() - 1]*$s3.intValue();
+	int temp2 = temp - AvailHours.vals[$mach.getId() - 1];
+	if ( temp2 < 0)
+            scoreHolder.addHardConstraintMatch(
+		kcontext, temp2);
+end
