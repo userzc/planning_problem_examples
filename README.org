@@ -1,4 +1,4 @@
-* Planning Problems Examples
+* Planning Problem Examples
 
   This repository holds a few planning problems examples and its
   solutions using OptaPlanner and other suggested methods in the
@@ -6,6 +6,20 @@
 
   Solutions other than OptaPlanner use python and a few dependencies
   listed below.
+
+** Java dependencies
+
+   The main requirements to run the java maven projects are the java
+   se development kit version 7 or above (preferably from oracle), and
+   maven version 3.0.4 (in the standard repositories) are the main
+   requirements. After these dependencies are met, inside each of the
+   maven project's directory (directories containing the =pom.xml=
+   file), the tests can be run with:
+
+   #+begin_src sh
+   mvn test
+   #+end_src
+
 
 ** Python dependencies
 
