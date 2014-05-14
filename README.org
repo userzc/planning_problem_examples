@@ -11,10 +11,10 @@
 
    The main requirements to run the java maven projects are the java
    se development kit version 7 or above (preferably from oracle), and
-   maven version 3.0.4 (in the standard repositories) are the main
-   requirements. After these dependencies are met, inside each of the
-   maven project's directory (directories containing the =pom.xml=
-   file), the tests can be run with:
+   maven version 3.0.4 (in the standard ubuntu repositories). After
+   these dependencies are met, inside each of the maven project's
+   directory (directories containing the =pom.xml= file), the tests
+   can be run with:
 
    #+begin_src sh
    mvn test
@@ -36,7 +36,7 @@
     #+end_src
 
     Then the PyGLPK package can be installed, optionally inside a
-    virtualenv, with:
+    [[http://virtualenvwrapper.readthedocs.org/en/latest/][virtualenv]], with:
 
     #+begin_src sh
     pip install glpk
