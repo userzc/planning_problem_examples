@@ -1,50 +1,58 @@
-# Planning Problem Examples
+# Ejemplos de Problemas de Planeación
 
-This repository holds a few planning problems examples and its
-solutions using OptaPlanner and other suggested methods in the
-literature.
+Este repositorio contiene algunos ejemplos de problemas de
+palneación junto con sus soluciones utilizando OptaPlanner y otras
+metodologías sugeridas en la literatura.
 
-Solutions other than OptaPlanner use python and a few dependencies
-listed below.
+Soluciones que no usan OptaPlanner utilizan python y algunas otras
+dependencias listadas abajo.
 
-## Java dependencies
+## Dependencias en Java
 
-The main requirements to run the java maven projects are the java
-se development kit version 7 or above (preferably from oracle), and
-maven version 3.0.4 (in the standard ubuntu repositories). After
-these dependencies are met, inside each of the maven project's
-directory (directories containing the `pom.xml` file), the tests
-can be run with:
+Los principales requerimientos para ejecutar los proyectos maven
+son el Java SE Development Kit versión 7 o superior
+(preferiblemente de oracle), y maven versión 3.0.4 (en los
+repositorios estándard de ubuntu). Depués de cumplir con estas
+dependencias, dentro de cada carpeta de proyectos maven (carpetas
+que contienen un archivo `pom.xml`), las pruebas pueden ser
+ejecutadas mediante:
 
 ```sh
    mvn test
 ```
 
-
-## Python dependencies
+## Dependencias en Python
 
 ### Ubuntu 13.10
 
-The linear programming problems are declared and solved using the
-[PyGLPK library](http://tfinley.net/software/pyglpk/discussion.html), the ubuntu package boundled in 13.10 is not recent
-enough, installation with [pip](http://www.pip-installer.org/en/latest/) inside a virtual environment is
-recommended but not mandatory. The required libraries for PyGLPK
-can be obtained from the ubuntu repositories with the commands:
+Los problemas de programación lineal son declarados y resueltos
+usando la [librería PyGLPK](http://tfinley.net/software/pyglpk/discussion.html), el paquete incluido en ubuntu 13.10 no
+es lo suficientemente reciente, por lo que se recomienda la
+instalación con [pip](http://www.pip-installer.org/en/latest/) dentro de un virtual environment aunque no es
+necesario. Las librerías para PyGLPK pueden ser obtenidas de los
+repositorios de ubuntu mediante los comandos:
 
 ```sh
     aptitude install glpk libgmp-dev
 ```
 
-Then the PyGLPK package can be installed, optionally inside a
-[virtualenv](http://virtualenvwrapper.readthedocs.org/en/latest/), with:
+Luego los paquetes de PyGLPK pueden ser instalados, de manera
+opcional dentro de un [virtualenv](http://virtualenvwrapper.readthedocs.org/en/latest/), con:
 
 ```sh
     pip install glpk
 ```
 
+Una vez instalados los paquetes anteriores, las soluciones en
+python se pueden ejecutar mediante:
 
-### Other Versions
+```sh
+    python $(nombre_archivo_a_ejecutar).py
+```
 
-The python package is the same but the sources for the needed
-libraries are dependant on the system, no testing has been made on
-systems other than ubuntu, but it should work.
+
+### Otras versiones
+
+El paquete de python es el mismo pero las fuentes necesarias para
+las librerías dependen del sistema, no se han realizado pruebas en
+sistemas diferentes a Ubuntu, pero deberían funcionar.
