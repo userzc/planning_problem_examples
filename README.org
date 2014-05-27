@@ -1,7 +1,7 @@
 * Ejemplos de Problemas de Planeación
 
   Este repositorio contiene algunos ejemplos de problemas de
-  palneación junto con sus soluciones utilizando OptaPlanner y otras
+  planeación junto con sus soluciones utilizando OptaPlanner y otras
   metodologías sugeridas en la literatura.
 
   Los problemas seleccionados tienen soluciones mediante métodos
@@ -14,7 +14,7 @@
    Los principales requerimientos para ejecutar los proyectos maven
    son el Java SE Development Kit versión 7 o superior
    (preferiblemente de oracle), y maven versión 3.0.4 (en los
-   repositorios estándard de ubuntu). Depués de cumplir con estas
+   repositorios estándard de ubuntu). Después de cumplir con estas
    dependencias, dentro de cada carpeta de proyectos maven (carpetas
    que contienen un archivo =pom.xml=), las pruebas pueden ser
    ejecutadas mediante:
